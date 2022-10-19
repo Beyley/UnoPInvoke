@@ -18,6 +18,8 @@
     <ItemGroup>
         <PackageReference Include="Uno.Wasm.Bootstrap" Version="3.3.1" />
         <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="3.3.1" PrivateAssets="all" />
+
+        <WasmShellAdditionalPInvokeLibrary Include="SDL" />
     </ItemGroup>
 
 </Project>

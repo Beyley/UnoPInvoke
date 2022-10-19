@@ -3,10 +3,18 @@
 namespace UnoPInvoke; 
 
 public class Program {
-	[DllImport("__Internal_emscripten")]
-	public static extern void emscripten_console_log(string str);
+	[DllImport("SDL")]
+	public static extern int SDL_Init(int flags);
+	
+	[DllImport("SDL", CharSet = CharSet.Ansi)]
+	public static extern IntPtr SDL_CreateWindow(string title, int x, int y, int w, int h, int flags);
 	
 	public static void Main(string[] args) {
-		emscripten_console_log("teststststs");
+		Console.WriteLine($"please... {SDL_Init(0)}");
+
+		IntPtr window = SDL_CreateWindow("omg", 0, 0, 800, 600, 0);
+		
+		
+		while(true) {}
 	}
 }
