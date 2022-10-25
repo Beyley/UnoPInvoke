@@ -5,6 +5,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -16,10 +17,13 @@
     </PropertyGroup>
     
     <ItemGroup>
-        <PackageReference Include="Uno.Wasm.Bootstrap" Version="3.3.1" />
-        <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="3.3.1" PrivateAssets="all" />
+        <PackageReference Include="Silk.NET.SDL" Version="2.16.0" />
+        <PackageReference Include="Uno.Foundation.Runtime.WebAssembly" Version="4.6.0-dev.947" />
+        <PackageReference Include="Uno.Wasm.Bootstrap" Version="7.0.0-dev.233" />
+        <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="7.0.0-dev.233" PrivateAssets="all" />
 
         <WasmShellAdditionalPInvokeLibrary Include="SDL" />
+        <WasmShellExtraEmccFlags Include="-s USE_SDL=2" />
     </ItemGroup>
 
 </Project>
