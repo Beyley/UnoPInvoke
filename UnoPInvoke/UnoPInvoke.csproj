@@ -6,7 +6,12 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <LangVersion>10</LangVersion>
     </PropertyGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="WasmScripts/**" />
+    </ItemGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
         <DebugType>portable</DebugType>
@@ -18,12 +23,13 @@
     
     <ItemGroup>
         <PackageReference Include="Silk.NET.SDL" Version="2.16.0" />
-        <PackageReference Include="Uno.Foundation.Runtime.WebAssembly" Version="4.6.0-dev.947" />
-        <PackageReference Include="Uno.Wasm.Bootstrap" Version="7.0.0-dev.233" />
-        <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="7.0.0-dev.233" PrivateAssets="all" />
+        <PackageReference Include="Uno.Foundation.Runtime.WebAssembly" Version="4.6.0-dev.970" />
+        <PackageReference Include="Uno.Wasm.Bootstrap" Version="7.0.0-dev.239" />
+        <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="7.0.0-dev.237" PrivateAssets="all" />
 
         <WasmShellAdditionalPInvokeLibrary Include="SDL" />
-        <WasmShellExtraEmccFlags Include="-s USE_SDL=2" />
+        <WasmShellAdditionalPInvokeLibrary Include="__Internal_emscripten" />
+        <WasmShellExtraEmccFlags Include="-s USE_SDL=2 -sMAIN_MODULE=1" />
     </ItemGroup>
 
 </Project>
