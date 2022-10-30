@@ -7,12 +7,6 @@ using Uno.Foundation;
 namespace UnoPInvoke;
 
 public class Program {
-	[DllImport("__Internal_emscripten")]
-	public static extern unsafe int dlopen(string fileName, int flags);
-	
-	[DllImport("__Internal_emscripten")]
-	public static extern nint dlsym(nint handle, string name);
-	
 	public static unsafe void Main(string[] args) {
 		try {
 			Console.WriteLine($"OS description: {RuntimeInformation.OSDescription} ({RuntimeInformation.OSArchitecture})");
@@ -20,14 +14,6 @@ public class Program {
 			Console.WriteLine($"{RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER"))}");
 			
 			Console.WriteLine($"{LibraryLoader.GetPlatformDefaultLoader().GetType()}");
-
-			nint dlopen1 = dlopen(null, 0);
-			
-			Console.WriteLine($"dlopen1: {(nuint)dlopen1}");
-			
-			nint dlsym1 = dlsym(dlopen1, "SDL_Init");
-			
-			Console.WriteLine($"dlsym1: {(nuint)dlsym1}");
 
 			WebAssemblyRuntime.InvokeJS(@"var canvas = document.createElement('canvas');
 canvas.style.position = ""absolute"";
@@ -44,16 +30,16 @@ document.body.appendChild(canvas);");
 
 			// SDL_Init(0);
 			
-			Sdl sdl = new Sdl(new DefaultNativeContext("SDL"));
+			Sdl sdl = Sdl.GetApi();
 
 			Console.WriteLine($"please... {sdl.Init(0)}");
 
 			Window* window = sdl.CreateWindow("omg", 0, 0, 800, 600, 0);
 
-			bool run = true;
-			while (run) {
+			// bool run = true;
+			// while (run) {
 				
-			}
+			// }
 
 			sdl.Quit();
 		}
