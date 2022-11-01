@@ -1,0 +1,3 @@
+[submodule "Silk.NET"]
+	path = Silk.NET
+	url = https://github.com/dotnet/Silk.NET

@@ -22,32 +22,29 @@
     </PropertyGroup>
     
     <ItemGroup>
-<!--        <PackageReference Include="Silk.NET.SDL" Version="2.16.0" />-->
         <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" />
         <PackageReference Include="Microsoft.DotNet.PlatformAbstractions" Version="3.1.6" />
         <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="6.0.0" />
         <PackageReference Include="Ultz.Bcl.Half" Version="1.0.0" />
         <PackageReference Include="Ultz.Bcl.Half.Fallback" Version="1.0.0" />
         <PackageReference Include="Uno.Foundation.Runtime.WebAssembly" Version="4.6.0-dev.970" />
-        <PackageReference Include="Uno.Wasm.Bootstrap" Version="7.0.0-dev.239" />
-        <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="7.0.0-dev.237" PrivateAssets="all" />
+        <PackageReference Include="Uno.Wasm.Bootstrap" Version="7.0.3" />
+        <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="7.0.3" PrivateAssets="all" />
 
         <WasmShellAdditionalPInvokeLibrary Include="SDL" />
         <WasmShellAdditionalPInvokeLibrary Include="__Internal_emscripten" />
         <WasmShellAdditionalPInvokeLibrary Include="libdl" />
-        <WasmShellExtraEmccFlags Include="-s USE_SDL=2 -s ERROR_ON_UNDEFINED_SYMBOLS=0" />
+        <WasmShellExtraEmccFlags Include="-s USE_SDL=2" />
     </ItemGroup>
     
     <ItemGroup>
-      <Reference Include="Silk.NET.Core">
-        <HintPath>..\..\..\..\Silk.NET\src\Windowing\Silk.NET.SDL\bin\Debug\netstandard2.0\Silk.NET.Core.dll</HintPath>
-      </Reference>
-      <Reference Include="Silk.NET.Maths">
-        <HintPath>..\..\..\..\Silk.NET\src\Windowing\Silk.NET.SDL\bin\Debug\netstandard2.0\Silk.NET.Maths.dll</HintPath>
-      </Reference>
-      <Reference Include="Silk.NET.SDL">
-        <HintPath>..\..\..\..\Silk.NET\src\Windowing\Silk.NET.SDL\bin\Debug\netstandard2.0\Silk.NET.SDL.dll</HintPath>
-      </Reference>
+      <ProjectReference Include="..\Silk.NET\src\Core\Silk.NET.SilkTouch\Silk.NET.SilkTouch.csproj" />
+      <ProjectReference Include="..\Silk.NET\src\Input\Silk.NET.Input.Common\Silk.NET.Input.Common.csproj" />
+      <ProjectReference Include="..\Silk.NET\src\Input\Silk.NET.Input.Sdl\Silk.NET.Input.Sdl.csproj" />
+      <ProjectReference Include="..\Silk.NET\src\OpenGL\Silk.NET.OpenGL\Silk.NET.OpenGL.csproj" />
+      <ProjectReference Include="..\Silk.NET\src\Windowing\Silk.NET.SDL\Silk.NET.SDL.csproj" />
+      <ProjectReference Include="..\Silk.NET\src\Windowing\Silk.NET.Windowing.Common\Silk.NET.Windowing.Common.csproj" />
+      <ProjectReference Include="..\Silk.NET\src\Windowing\Silk.NET.Windowing.Sdl\Silk.NET.Windowing.Sdl.csproj" />
     </ItemGroup>
-
+    
 </Project>

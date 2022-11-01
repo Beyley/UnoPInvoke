@@ -1,8 +1,14 @@
 ﻿using System.Runtime.InteropServices;
 using Silk.NET.Core.Contexts;
 using Silk.NET.Core.Loader;
+using Silk.NET.Input;
+using Silk.NET.Input.Sdl;
+using Silk.NET.OpenGL;
 using Silk.NET.SDL;
+using Silk.NET.Windowing;
+using Silk.NET.Windowing.Sdl;
 using Uno.Foundation;
+using Window = Silk.NET.Windowing.Window;
 
 namespace UnoPInvoke;
 
@@ -13,8 +19,6 @@ public class Program {
 
 			Console.WriteLine($"{RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER"))}");
 			
-			Console.WriteLine($"{LibraryLoader.GetPlatformDefaultLoader().GetType()}");
-
 			WebAssemblyRuntime.InvokeJS(@"var canvas = document.createElement('canvas');
 canvas.style.position = ""absolute"";
 canvas.style.left       = ""0px"";
@@ -26,22 +30,49 @@ canvas.style.width = ""100%"";
 canvas.style.height = ""100%"";
 canvas.oncontextmenu=""event.preventDefault()"";
 canvas.id = 'canvas';
-document.body.appendChild(canvas);");
+document.body.appendChild(canvas);
 
-			// SDL_Init(0);
+//Set the module canvas
+Module['canvas'] = canvas;
+");
+
+			SdlWindowing.RegisterPlatform();
+			SdlInput.RegisterPlatform();
+
+			ViewOptions options = ViewOptions.Default;
+
+			options.FramesPerSecond = 60;
+			options.UpdatesPerSecond = 60;
+
+			options.API = new GraphicsAPI(ContextAPI.OpenGLES, ContextProfile.Core, ContextFlags.Debug, new APIVersion(3, 0));
 			
-			Sdl sdl = Sdl.GetApi();
+			IView window = Window.GetView(options);
 
-			Console.WriteLine($"please... {sdl.Init(0)}");
+			GL gl = null;
+			window.Load += () => {
+				IInputContext inputContext = window.CreateInput();
 
-			Window* window = sdl.CreateWindow("omg", 0, 0, 800, 600, 0);
-
-			// bool run = true;
-			// while (run) {
+				foreach (IKeyboard kb in inputContext.Keyboards) {
+					kb.KeyDown += (keyboard, key, arg3) => {
+						Console.WriteLine($"{keyboard.Name} pressed {key}");
+					};
+				}
 				
-			// }
+				gl = window.CreateOpenGL();
+			};
 
-			sdl.Quit();
+			window.Update += d => {
+				Console.WriteLine($"update delta: {d * 1000d}ms");
+			};
+
+			window.Render += d => {
+				Console.WriteLine($"render delta: {d * 1000d}ms");
+				
+				gl.ClearColor(0.5f, 0.5f, 0.5f, 1f);
+				gl.Clear(ClearBufferMask.ColorBufferBit);
+			};
+			
+			window.Run();
 		}
 		catch (Exception ex) {
 			Console.WriteLine(ex.ToString());
